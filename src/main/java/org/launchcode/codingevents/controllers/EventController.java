@@ -21,7 +21,11 @@ public class EventController {
         events.add("Stamp");
         model.addAttribute("events", events);
         return "events/index";
-
-
     }
+
+    @GetMapping("create")
+    public String renderCreatEventForm() {
+        return "events/create";
+    }
+
 }
