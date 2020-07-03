@@ -4,17 +4,20 @@
     <meta charset="UTF-8"/>
     <title>Coding Events</title>
 
-    <script th:src="@{/script.js}"></script>
-    <link th:href="@{/styles.css}" rel="stylesheet">
+<!--    <script th:src="@{/script.js}"></script>killd in 1.6 -->
+<!--    <link th:href="@{/styles.css}" rel="stylesheet">-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
 
 </head>
 <body>
 <h1></h1>
 
-<nav th:fragments="navigation">
-    <ul>
-        <li><a href="/events">All Events</a></li>
-        <li><a href="/events/create">Create Event</a></li>
+<nav th:fragments="header">
+    <ul class="nav">
+        <li class="nav-item"><a class="nav-link" href="/events">All Events</a></li>
+        <li class="nav-item"><a class="nav-link" href="/events/create">Create Event</a></li>
     </ul>
 </nav>
 
