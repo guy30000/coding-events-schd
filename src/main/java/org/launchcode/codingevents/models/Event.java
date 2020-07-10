@@ -1,14 +1,21 @@
 package org.launchcode.codingevents.models;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Objects;
-
+import javax.persistence.*;
+//
+//
+@Entity
 public class Event {
 
+    @Id
+    @GeneratedValue
     private int id;
-    private static int nextId = 1;
 
     @Size(min = 3, max = 20, message = "Name must be 3 - 20 characters")
     @NotBlank(message = "Name is required")
@@ -23,14 +30,9 @@ public class Event {
 
     private EventType type;
 
-    public Event(){
-        this.id=nextId;
-        nextId++;
-    }
-
+    public Event(){}
 
     public Event(String name, String description, String contactEmail) {
-        this();
         this.name= name;
         this.description = description;
         this.contactEmail = contactEmail;
