@@ -40,8 +40,9 @@ public class EventCategoryController {
         if (errors.hasErrors()){
             model.addAttribute("title", "Add New Category");
             return "category/add";
-        }
 
+        }
+        System.out.println(newEventCat.getId() + " E VENT CAAT ID XXXXXXXXX");
         eventCategoryRepository.save(newEventCat);
         return "redirect:";
     }

@@ -1,18 +1,15 @@
 package org.launchcode.codingevents.models;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
-
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Objects;
-import javax.persistence.*;
 //
 //
 @Entity
 public class Event extends AbstractEntity {
-
 
     @Size(min = 3, max = 20, message = "Name must be 3 - 20 characters")
     @NotBlank(message = "Name is required")
@@ -25,18 +22,17 @@ public class Event extends AbstractEntity {
     @Email(message = "Invalid email")
     private String contactEmail;
 
-    private EventType type;
+    @ManyToOne
+    @NotNull(message = "Category is required")
+    private EventCategory eventCategory;
 
     public Event(){}
 
-    public Event(String name, String description, String contactEmail) {
+    public Event(String name, String description, String contactEmail, EventCategory eventCategory) {
         this.name= name;
         this.description = description;
         this.contactEmail = contactEmail;
-        this.type= type;
-    }
-
-
+        this.eventCategory= eventCategory;   }
 
     public String getName() {
         return name;
@@ -62,18 +58,17 @@ public class Event extends AbstractEntity {
         this.contactEmail = contactEmail;
     }
 
-    public EventType getType() {
-        return type;
+    public EventCategory getEventCategory() {
+        return eventCategory;
     }
 
-    public void setType(EventType type) {
-        this.type = type;
+    public void setEventCategory(EventCategory eventCategory) {
+        this.eventCategory = eventCategory;
     }
 
     @Override
     public String toString() {
         return name;
     }
-
 
 }
