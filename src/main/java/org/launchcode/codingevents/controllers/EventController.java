@@ -11,6 +11,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("events")
@@ -23,14 +24,31 @@ public class EventController {
     private EventCategoryRepository eventCategoryRepository;
 
     @GetMapping
-    public String displayAllEvents(Model model, String description ){
-        model.addAttribute("title", "All Events");
-        model.addAttribute("events", eventRepository.findAll());
+    public String displayAllEvents(@RequestParam(required=false) Integer categoryId, Model model, String description ){
+
+        if (categoryId == null) {
+            model.addAttribute("title", "All Events");
+            model.addAttribute("events", eventRepository.findAll());
+        } else {
+            Optional<EventCategory> result = eventCategoryRepository.findById(categoryId);
+                    if (!result.isPresent()){
+                        model.addAttribute("title", "Invalid Category ID");
+                    } else {
+                        EventCategory caregory = result.get();
+                        model.addAttribute("title", "Events in Category: " + caregory.getName() );
+                        model.addAttribute("events", caregory.getEvents());
+                    }
+        }
         return "events/index";
     }
 
     @GetMapping("create")
     public String displayCreatEventForm(Model model) {
+//        if (eventCategoryRepository == null){
+//            model.addAttribute("title", "Create Catagory for Event");
+//            model.addAttribute(new EventCategory());
+//            return "category/add";
+//        } This is simple thing to make it redirect if there are no cats
         model.addAttribute("title", "Create Events");
         model.addAttribute(new Event());
         model.addAttribute("categories", eventCategoryRepository.findAll());

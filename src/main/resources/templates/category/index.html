@@ -2,14 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <body class="container">
-<h1>All Events</h1>
+<h1 th:text="${title}"></h1>
 <nav th:replace="fragments" :: navigation></nav>
 
 <p th:unless="${categories} and ${categories.size()}">No Categories</p>
 
 <ul class="table table-striped">
 <ul th:each="cat : ${categories}">
-    <td th:text="${cat.name}">
+    <td><a th:text="${cat.name}" th:href="'/events?categoryId=' + ${cat.id}"></a></td>
 </ul>
 </ul>
 
