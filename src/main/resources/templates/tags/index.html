@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+<h1 th:text="${title}"></h1>
+<nav th:replace="fragments" :: navigation></nav>
+
+<p th:unless="${tags} and ${tags.size()}">No Tags</p>
+
+<ul class="table table-striped">
+    <ul th:each="tag : ${tags}">
+        <td><a th:text="${tag.displayName}" th:href="'/events?tagId=' + ${tag.id}"></a></td>
+    </ul>
+</ul>
+
+
+</body>
+</html>

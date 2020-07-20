@@ -67,11 +67,14 @@ public class EventController {
         for (EventCategory testCat : eventCategoryRepository.findAll()) {
             System.out.println(testCat + "  xxeeeeeee Printing testcat id= " + testCat.getId()  +" name=" + testCat.getName());
             System.out.println(newEvent + "  xxeeeeeee Printing newEventCat plain= " + newEvent.getEventCategory() + " name=" + newEvent.getEventCategory().getName()+" ID=" + newEvent.getEventCategory().getId() );
-            if (testCat.getId() == Integer.parseInt((newEvent.getEventCategory().getName()))){
-                newEvent.setEventCategory(testCat);
-                eventRepository.save(newEvent);
-                break;
-            }
+            //For some reasy which I have yet to figure out. I had to write a loop to set the catagory. I don't recall a similer problem in prior runs
+            //after coding for 6.1 it suddenly started working with the correct coding.
+//            if (testCat.getId() == Integer.parseInt((newEvent.getEventCategory().getName()))){
+//                newEvent.setEventCategory(testCat);
+//                eventRepository.save(newEvent);
+//                break;
+//            }
+            eventRepository.save(newEvent);
         }
         return "redirect:";  //Redirects into root of specific controller
     }
@@ -91,6 +94,21 @@ public class EventController {
             }
         }
         return "redirect:";
+    }
+
+    @GetMapping("detail")
+    public String displayEventDetails(@RequestParam Integer eventId, Model model){
+        System.out.println("displayEventDetails xxxxxxxxxxxxxxx " + eventId);
+        Optional<Event> result = eventRepository.findById(eventId);
+        if (!result.isPresent()){
+            model.addAttribute("title", "Invalid Event ID: " + eventId);
+        } else {
+            Event event = result.get();
+            model.addAttribute("title",  event.getName() + " Details");
+            model.addAttribute("event" , event);
+        }
+        return "events/detail";
+
     }
 
 }
