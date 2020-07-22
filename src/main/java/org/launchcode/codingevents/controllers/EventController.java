@@ -144,6 +144,4 @@ public class EventController {
     return "redirect:add-tag";
     }
 
-
-
 }
